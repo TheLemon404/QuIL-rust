@@ -1,0 +1,12 @@
+[
+  {
+    "label": "Build",
+    "command": "cargo build",
+    "use_new_terminal": false
+  },
+  {
+    "label": "Test",
+    "command": "cargo test",
+    "use_new_terminal": false
+  }
+]
