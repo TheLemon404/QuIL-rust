@@ -3,7 +3,7 @@ use std::os::windows::ffi;
 use glfw::{
     self,
     ffi::{GLFW_PRESS, GLFW_RELEASE},
-    Key, MouseButton,
+    Glfw, Key, MouseButton,
 };
 
 pub enum QuilInputState {
@@ -16,23 +16,19 @@ pub enum QuilInputState {
 pub struct Quil {
     keys: [i32; 349],
     buttons: [i32; 8],
-    glfw: glfw::Glfw,
-    glfw_window: glfw::PWindow,
 }
 
 impl Quil {
-    pub fn new(window: glfw::PWindow, glfw: glfw::Glfw) -> Quil {
+    pub fn new() -> Quil {
         Quil {
             keys: [0; 349],
             buttons: [0; 8],
-            glfw: glfw,
-            glfw_window: window,
         }
     }
 
-    pub fn get_key_state(&mut self, key: Key) -> QuilInputState {
+    pub fn get_key_state(&mut self, key: Key, glfw_window: &glfw::PWindow) -> QuilInputState {
         let mut result: QuilInputState = QuilInputState::QUIL_RELEASED;
-        let glfw_key_state: i32 = self.glfw_window.get_key(key) as i32;
+        let glfw_key_state: i32 = glfw_window.get_key(key) as i32;
 
         match glfw_key_state {
             GLFW_PRESS => {
@@ -57,9 +53,13 @@ impl Quil {
         return result;
     }
 
-    pub fn get_mouse_button_state(&mut self, button: MouseButton) -> QuilInputState {
+    pub fn get_mouse_button_state(
+        &mut self,
+        button: MouseButton,
+        glfw_window: &glfw::PWindow,
+    ) -> QuilInputState {
         let mut result: QuilInputState = QuilInputState::QUIL_RELEASED;
-        let glfw_button_state: i32 = self.glfw_window.get_mouse_button(button) as i32;
+        let glfw_button_state: i32 = glfw_window.get_mouse_button(button) as i32;
 
         match glfw_button_state {
             GLFW_PRESS => {
@@ -104,46 +104,74 @@ impl Quil {
         }
     }
 
-    pub fn is_key_released(&mut self, key: Key) -> bool {
-        return matches!(self.get_key_state(key), QuilInputState::QUIL_RELEASED);
-    }
-
-    pub fn is_key_just_released(&mut self, key: Key) -> bool {
-        return matches!(self.get_key_state(key), QuilInputState::QUIL_JUST_RELEASED);
-    }
-
-    pub fn is_key_pressed(&mut self, key: Key) -> bool {
-        return matches!(self.get_key_state(key), QuilInputState::QUIL_PRESSED);
-    }
-
-    pub fn is_key_just_pressed(&mut self, key: Key) -> bool {
-        return matches!(self.get_key_state(key), QuilInputState::QUIL_JUST_PRESSED);
-    }
-
-    pub fn is_mouse_button_released(&mut self, button: MouseButton) -> bool {
+    pub fn is_key_released(&mut self, key: Key, glfw_window: &glfw::PWindow) -> bool {
         return matches!(
-            self.get_mouse_button_state(button),
+            self.get_key_state(key, glfw_window),
             QuilInputState::QUIL_RELEASED
         );
     }
 
-    pub fn is_mouse_button_just_released(&mut self, button: MouseButton) -> bool {
+    pub fn is_key_just_released(&mut self, key: Key, glfw_window: &glfw::PWindow) -> bool {
         return matches!(
-            self.get_mouse_button_state(button),
+            self.get_key_state(key, glfw_window),
             QuilInputState::QUIL_JUST_RELEASED
         );
     }
 
-    pub fn is_mouse_button_pressed(&mut self, button: MouseButton) -> bool {
+    pub fn is_key_pressed(&mut self, key: Key, glfw_window: &glfw::PWindow) -> bool {
         return matches!(
-            self.get_mouse_button_state(button),
+            self.get_key_state(key, glfw_window),
             QuilInputState::QUIL_PRESSED
         );
     }
 
-    pub fn is_mouse_button_just_pressed(&mut self, button: MouseButton) -> bool {
+    pub fn is_key_just_pressed(&mut self, key: Key, glfw_window: &glfw::PWindow) -> bool {
         return matches!(
-            self.get_mouse_button_state(button),
+            self.get_key_state(key, glfw_window),
+            QuilInputState::QUIL_JUST_PRESSED
+        );
+    }
+
+    pub fn is_mouse_button_released(
+        &mut self,
+        button: MouseButton,
+        glfw_window: &glfw::PWindow,
+    ) -> bool {
+        return matches!(
+            self.get_mouse_button_state(button, glfw_window),
+            QuilInputState::QUIL_RELEASED
+        );
+    }
+
+    pub fn is_mouse_button_just_released(
+        &mut self,
+        button: MouseButton,
+        glfw_window: &glfw::PWindow,
+    ) -> bool {
+        return matches!(
+            self.get_mouse_button_state(button, glfw_window),
+            QuilInputState::QUIL_JUST_RELEASED
+        );
+    }
+
+    pub fn is_mouse_button_pressed(
+        &mut self,
+        button: MouseButton,
+        glfw_window: &glfw::PWindow,
+    ) -> bool {
+        return matches!(
+            self.get_mouse_button_state(button, glfw_window),
+            QuilInputState::QUIL_PRESSED
+        );
+    }
+
+    pub fn is_mouse_button_just_pressed(
+        &mut self,
+        button: MouseButton,
+        glfw_window: &glfw::PWindow,
+    ) -> bool {
+        return matches!(
+            self.get_mouse_button_state(button, glfw_window),
             QuilInputState::QUIL_JUST_PRESSED
         );
     }

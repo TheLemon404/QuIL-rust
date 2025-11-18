@@ -2,7 +2,7 @@ mod quil;
 
 #[cfg(test)]
 mod tests {
-    use glfw::{fail_on_errors, ffi::GLFW_KEY_Q};
+    use glfw::{fail_on_errors, ffi::GLFW_KEY_Q, Context};
 
     use crate::quil::{Quil, QuilInputState};
 
@@ -16,10 +16,16 @@ mod tests {
             .expect("Failed to open window")
             .0;
 
-        let mut quil: Quil = Quil::new(window, glfw);
+        window.make_current();
+        window.set_key_polling(true);
 
-        while !quil.is_key_just_pressed(glfw::Key::Q) {
-            let state: QuilInputState = quil.get_key_state(glfw::Key::Space);
+        let mut quil: Quil = Quil::new();
+
+        while !window.should_close() {
+            window.swap_buffers();
+            glfw.poll_events();
+
+            let state: QuilInputState = quil.get_key_state(glfw::Key::Space, &window);
             println!("{}", quil.key_to_string(state));
         }
     }
