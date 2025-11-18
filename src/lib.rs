@@ -6,8 +6,6 @@ mod tests {
 
     use crate::quil::{Quil, QuilInputState};
 
-    use super::*;
-
     #[test]
     fn it_works() {
         let mut glfw = glfw::init(fail_on_errors!()).unwrap();
@@ -23,10 +21,11 @@ mod tests {
 
         while !window.should_close() {
             window.swap_buffers();
-            glfw.poll_events();
 
             let state: QuilInputState = quil.get_key_state(glfw::Key::Space, &window);
             println!("{}", quil.key_to_string(state));
+
+            glfw.poll_events();
         }
     }
 }
