@@ -12,7 +12,7 @@ repository = "https://github.com/TheLemon404/QuIL-rust.git"
 homepage = "https://github.com/TheLemon404/QuIL-rust"
 
 [dependencies]
-glfw = "*"
+glfw = "0.60.0"
 
 [lib]
 name = "quil"
