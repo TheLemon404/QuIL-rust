@@ -2,6 +2,25 @@
 name = "quil-r"
 version = "0.1.0"
 edition = "2021"
+description = "A simple, easy to use, glfw input abstraction to allow for rapid prototyping of glfw projects."
+authors = ["Michael Teschner <https://michaelteschner.com"]
+liscense = "MIT"
+keywords = ["glfw", "input"]
+categories = ["input", "input-management"]
+readme = "README.md"
+repository = "https://github.com/TheLemon404/QuIL-rust.git"
+homepage = "https://github.com/TheLemon404/QuIL-rust"
 
 [dependencies]
 glfw = "*"
+
+[lib]
+name = "quil"
+path = "src/quil.rs"
+test = false
+doctest = false
+bench = false
+doc = false
+proc-macro = false
+crate-type = ["lib"]
+required-features = []

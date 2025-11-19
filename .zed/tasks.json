@@ -8,5 +8,10 @@
     "label": "Test",
     "command": "cargo test",
     "use_new_terminal": false
+  },
+  {
+    "label": "Run",
+    "command": "cargo run",
+    "use_new_terminal": false
   }
 ]
