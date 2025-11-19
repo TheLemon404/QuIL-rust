@@ -14,7 +14,11 @@ Oftentimes, when writing a project containing keyboard and mouse input, I find m
 ```Rust
 mod quil;
 
-use glfw::{fail_on_errors, ffi::GLFW_KEY_Q, Context};
+use glfw::{
+    fail_on_errors,
+    ffi::{GLFW_KEY_Q, GLFW_MOUSE_BUTTON_1},
+    Context,
+};
 
 use crate::quil::{Quil, QuilInputState};
 
@@ -33,8 +37,24 @@ fn main() {
     while !window.should_close() {
         window.swap_buffers();
 
-        let state: QuilInputState = quil.get_key_state(glfw::Key::Space, &window);
-        println!("{}", quil.key_to_string(state));
+        if (quil.is_mouse_button_just_pressed(glfw::MouseButtonLeft, &window)) {
+            // custom logic
+        }
+
+        if (quil.is_mouse_button_pressed(glfw::MouseButtonLeft, &window)) {
+            // custom logic
+        }
+
+        if (quil.is_key_just_released(glfw::Key::W, &window)) {
+            // custom logic
+        }
+
+        if (quil.is_key_released(glfw::Key::W, &window)) {
+            // custom logic
+        }
+
+        let mut space_key_state: QuilInputState = quil.get_key_state(glfw::Key::Space, &window);
+        println!("{}", quil.key_to_string(space_key_state));
 
         glfw.poll_events();
     }
