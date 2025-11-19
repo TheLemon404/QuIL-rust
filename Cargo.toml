@@ -1,5 +1,5 @@
 [package]
-name = "quil-r"
+name = "quil-rust"
 version = "0.1.0"
 edition = "2021"
 description = "A simple, easy to use, glfw input abstraction to allow for rapid prototyping of glfw projects."
